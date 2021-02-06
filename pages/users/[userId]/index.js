@@ -3,6 +3,7 @@ import Link from "next/link"
 import axios from "axios";
 import styles from "./user.module.css"
 import { useCallback } from 'react';
+import Loading from "../../../components/Loading"
 
 User.getInitialProps = async ({ query }) => {
   return { query };
@@ -21,7 +22,7 @@ export default function User({ query }) {
   },[])
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (!data) return <Loading />
 
   return (
     <div>

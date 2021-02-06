@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import axios from "axios";
 import Link from "next/link"
 import styles from "./users.module.css"
+import Loading from "../../components/Loading"
 
 export default function Users() {
   const fetcher = (url)=> axios(url).then(res => res.data)
@@ -10,7 +11,7 @@ export default function Users() {
   console.log(data)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (!data) return <Loading />
 
   return (
     <div>
