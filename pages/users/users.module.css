@@ -1,0 +1,17 @@
+.user {
+  margin-bottom: 15px;
+}
+
+.userLink {
+  text-decoration: underline;
+  display: inline-block;
+  transition: all 0.3s;
+}
+
+.userLink:hover {
+  opacity: 0.5;
+}
+
+.userName {
+  margin: 0;
+}

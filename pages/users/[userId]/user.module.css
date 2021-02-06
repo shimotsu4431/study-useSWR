@@ -1,0 +1,8 @@
+.home {
+  text-decoration: underline;
+  transition: all 0.3s;
+}
+
+.home:hover {
+  opacity: 0.4;
+}
