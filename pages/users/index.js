@@ -1,9 +1,10 @@
 import useSWR from 'swr'
+import axios from "axios";
 import Link from "next/link"
 import styles from "./users.module.css"
 
 export default function Users() {
-  const fetcher = (...args) => fetch(...args).then(res => res.json())
+  const fetcher = (url)=> axios(url).then(res => res.data)
   const { data, error } = useSWR('https://jsonplaceholder.typicode.com/users', fetcher)
 
   console.log(data)

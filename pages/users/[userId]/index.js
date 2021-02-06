@@ -1,5 +1,6 @@
 import useSWR from 'swr'
 import Link from "next/link"
+import axios from "axios";
 import styles from "./user.module.css"
 
 User.getInitialProps = async ({ query }) => {
@@ -7,8 +8,7 @@ User.getInitialProps = async ({ query }) => {
 };
 
 export default function User({ query }) {
-  console.log(query.userId)
-  const fetcher = (...args) => fetch(...args).then(res => res.json())
+  const fetcher = (url)=> axios(url).then(res => res.data)
   const { data, error } = useSWR(`https://jsonplaceholder.typicode.com/users/${query.userId}/posts`, fetcher, {
     refreshInterval: 10000
   })
@@ -22,7 +22,7 @@ export default function User({ query }) {
     <div>
       <Link href={`/users`}>
         <a className={styles.home}>
-          home
+          ← home
         </a>
       </Link>
       <h1>UserId: {data[0].userId}</h1>
