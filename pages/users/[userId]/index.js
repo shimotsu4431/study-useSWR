@@ -1,7 +1,8 @@
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import Link from "next/link"
 import axios from "axios";
 import styles from "./user.module.css"
+import { useCallback } from 'react';
 
 User.getInitialProps = async ({ query }) => {
   return { query };
@@ -10,10 +11,14 @@ User.getInitialProps = async ({ query }) => {
 export default function User({ query }) {
   const fetcher = (url)=> axios(url).then(res => res.data)
   const { data, error } = useSWR(`https://jsonplaceholder.typicode.com/users/${query.userId}/posts`, fetcher, {
-    refreshInterval: 10000
+    refreshInterval: 0
   })
 
   console.log(data)
+
+  const handleClick = useCallback(() => {
+    mutate(`https://jsonplaceholder.typicode.com/users/${query.userId}/posts`)
+  },[])
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
@@ -25,6 +30,9 @@ export default function User({ query }) {
           ← home
         </a>
       </Link>
+      <div>
+        <button onClick={handleClick}>ReFetch</button>
+      </div>
       <h1>UserId: {data[0].userId}</h1>
       {data && data.length >= 1 && (
         data.map((post, idx) => {
