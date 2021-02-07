@@ -1,10 +1,9 @@
 import useSWR, { mutate } from 'swr'
-import Link from "next/link"
 import axios from "axios";
 import { useCallback } from 'react';
 import getConfig from 'next/config'
 
-import styles from "./user.module.css"
+import Header from '../../../components/Header'
 import Loading from "../../../components/Loading"
 
 const { publicRuntimeConfig } = getConfig()
@@ -28,26 +27,24 @@ export default function User({ query }) {
   if (!data) return <Loading />
 
   return (
-    <div>
-      <Link href={`/users`}>
-        <a className={styles.home}>
-          ← home
-        </a>
-      </Link>
+    <>
+      <Header />
       <div>
-        <button onClick={handleClick}>ReFetch</button>
+        <div>
+          <button onClick={handleClick}>ReFetch</button>
+        </div>
+        <h1>UserId: {data[0].userId}</h1>
+        {data && data.length >= 1 && (
+          data.map((post, idx) => {
+            return (
+              <div key={idx}>
+                <h2>{post.title}</h2>
+                <p>{post.body}</p>
+              </div>
+            )
+          })
+        )}
       </div>
-      <h1>UserId: {data[0].userId}</h1>
-      {data && data.length >= 1 && (
-        data.map((post, idx) => {
-          return (
-            <div key={idx}>
-              <h2>{post.title}</h2>
-              <p>{post.body}</p>
-            </div>
-          )
-        })
-      )}
-    </div>
+    </>
   )
 }

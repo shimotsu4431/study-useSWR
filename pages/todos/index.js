@@ -2,6 +2,8 @@ import useSWR from 'swr'
 import axios from "axios";
 import getConfig from 'next/config'
 
+import Header from '../../components/Header'
+
 const { publicRuntimeConfig } = getConfig()
 const { API_URL } = publicRuntimeConfig
 
@@ -18,12 +20,15 @@ export default function Todos(props) {
 
   return (
     <>
+    <Header />
     <h2>Todos</h2>
-    {data && data.length >= 1 && (
-      data.map((t) => {
-        return <p key={t.id}>{t.id}: {t.title}</p>
-      })
-    )}
+    <div>
+      {data && data.length >= 1 && (
+        data.map((t) => {
+          return <p key={t.id}>{t.id}: {t.title}</p>
+       })
+      )}
+    </div>
     </>
   )
 }

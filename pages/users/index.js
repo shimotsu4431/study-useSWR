@@ -5,6 +5,7 @@ import getConfig from 'next/config'
 
 import styles from "./users.module.css"
 import Loading from "../../components/Loading"
+import Header from '../../components/Header'
 
 const { publicRuntimeConfig } = getConfig()
 const { API_URL } = publicRuntimeConfig
@@ -17,6 +18,8 @@ export default function Users() {
   if (!data) return <Loading />
 
   return (
+    <>
+    <Header />
     <div>
       <h1>Users</h1>
       {data && data.length >= 1 && (
@@ -33,5 +36,6 @@ export default function Users() {
         })
       )}
     </div>
+    </>
   )
 }
