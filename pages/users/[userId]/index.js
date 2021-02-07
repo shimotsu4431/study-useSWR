@@ -1,9 +1,14 @@
 import useSWR, { mutate } from 'swr'
 import Link from "next/link"
 import axios from "axios";
-import styles from "./user.module.css"
 import { useCallback } from 'react';
+import getConfig from 'next/config'
+
+import styles from "./user.module.css"
 import Loading from "../../../components/Loading"
+
+const { publicRuntimeConfig } = getConfig()
+const { API_URL } = publicRuntimeConfig
 
 User.getInitialProps = async ({ query }) => {
   return { query };
@@ -11,14 +16,12 @@ User.getInitialProps = async ({ query }) => {
 
 export default function User({ query }) {
   const fetcher = (url)=> axios(url).then(res => res.data)
-  const { data, error } = useSWR(`https://jsonplaceholder.typicode.com/users/${query.userId}/posts`, fetcher, {
+  const { data, error } = useSWR(`${API_URL}/users/${query.userId}/posts`, fetcher, {
     refreshInterval: 0
   })
 
-  console.log(data)
-
   const handleClick = useCallback(() => {
-    mutate(`https://jsonplaceholder.typicode.com/users/${query.userId}/posts`)
+    mutate(`${API_URL}/users/${query.userId}/posts`)
   },[])
 
   if (error) return <div>failed to load</div>
